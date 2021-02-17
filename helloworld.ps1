@@ -1,5 +1,5 @@
 # Hello, World!
-$hello = "Hello, World!1"
+$hello = "Hello, World!"
 
 Write-Output $hello
 
