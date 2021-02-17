@@ -1,5 +1,5 @@
 # Hello, World!
-$hello = "Hello, World!"
+$hello = "Hello, World! test"
 
 Write-Output $hello
 
