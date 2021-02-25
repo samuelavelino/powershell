@@ -1,11 +1,19 @@
-# Hello, World!
+<#
+http://go.microsoft.com/fwlink/?LinkID=135170
+
+When you are executing a PowerShell script for the first time you may encounter the following error:
+filename.ps1 cannot be loaded because running scripts is disabled on this system.
+
+Open a new session as an administrator and type:
+
+PowerShell:
+
+Set-ExecutionPolicy RemoteSigned -force
+
+Command Prompt:
+
+powershell Set-ExecutionPolicy RemoteSigned
+#>
 $hello = "Hello, World!"
 
 Write-Output $hello
-
-<#
-If this is your first time running a Powershell (.ps1) script, you may have an issue
-running the script due to default resrictions. 
-Type this into the shell:
-Set-ExecutionPolicy RemoteSigned
-#>
