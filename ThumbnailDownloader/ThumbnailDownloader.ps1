@@ -1,4 +1,5 @@
-param ($size, $id)
+$size=$args[0]
+$id=$args[1]
 
 $aQuality = @("maxresdefault", "sddefault", "hqdefault", "mqdefault", "default", "1", "2", "3")
 
