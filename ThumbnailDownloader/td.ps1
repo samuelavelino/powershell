@@ -1,12 +1,12 @@
 param (
-    [Alias('P')]$path = [Environment]::GetFolderPath("Desktop"),
-    [Alias('D')]$download = [IO.Path]::Combine($path, 'links.txt'),
-    [Alias('S')]$size = 'all',
-    [Alias('F')]$subFolder = 'id',
-    [Alias('O')]$overwrite = $false,
+    [Alias('P')][string]$path = [Environment]::GetFolderPath("Desktop"),
+    [Alias('D')][string]$download = [IO.Path]::Combine($path, 'links.txt'),
+    [Alias('S')][string]$size = 'all',
+    [Alias('F')][string]$subFolder = 'id',
+    [Alias('O')][bool]$overwrite = $false,
     [Alias('M')][bool]$showOutput = $true,
-    [Alias('A')]$archive = $true,
-    [Alias('E')]$exec
+    [Alias('A')][bool]$archive = $true,
+    [Alias('E')][string]$exec
 )
 
 #=================================================================================
