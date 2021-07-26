@@ -2,7 +2,8 @@ param (
     [Alias('P')]$path = [Environment]::GetFolderPath("Desktop"),
     [Alias('D')]$download = [IO.Path]::Combine($path, 'links.txt'),
     [Alias('S')]$size = 'all',
-    [Alias('F')]$subFolder = 'id',
+    [Alias('F')]$folderName = "Thumb $(Get-Date -Format "yyyy-MM-dd_HH-mm-ss")",
+    [Alias('Sf')]$subFolder = 'id',
     [Alias('O')]$overwrite = $false,
     [Alias('M')]$showOutput = $true,
     [Alias('A')]$archive = $true,
@@ -18,13 +19,11 @@ param (
 # Declarations
 
 $quality = @('maxresdefault', 'sddefault', 'hqdefault', 'mqdefault', 'default', '1', '2', '3')
-$date = Get-Date -Format "yyyy-MM-dd_HH-mm-ss"
-$folderName = "Thumb ($date)"
 $path = [IO.Path]::Combine($path, $folderName)
 $file = [IO.Path]::Combine($path, "archive.txt")
 
 #=================================================================================
-# Function
+# Functions
 
 Function Create-Directory( $path ) {
     <#
