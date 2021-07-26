@@ -137,7 +137,7 @@ Function Download-Thumbnail( $url ) {
                     if ($showOutput) { Write-Host "[TD] (Download-Thumbnail) The file was overwritten: $fileName" -f Green }
                     
                     $success = Download-File $address $fileName
-                    if ($success -and $exec -ne $null) {
+                    if ($success -and $exec -ne '') {
                         if ($showOutput) { Write-Host "[TD] (Download-Thumbnail) Command executed: $exec" -f Yellow }
                         Invoke-Expression "$exec" -ErrorAction Stop
                     }
@@ -147,7 +147,7 @@ Function Download-Thumbnail( $url ) {
             else {
 
                 $success = Download-File $address $fileName
-                if ($success -and $exec -ne $null) {
+                if ($success -and $exec -ne '') {
                     if ($showOutput) { Write-Host "[TD] (Download-Thumbnail) Command executed: $exec" -f Yellow }
                     Invoke-Expression "$exec" -ErrorAction Stop
                 }
