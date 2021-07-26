@@ -4,7 +4,7 @@ param (
     [Alias('S')]$size = 'all',
     [Alias('F')]$subFolder = 'id',
     [Alias('O')]$overwrite = $false,
-    [Alias('M')]$showOutput = $true,
+    [Alias('M')][bool]$showOutput = $true,
     [Alias('A')]$archive = $true,
     [Alias('E')]$exec
 )
