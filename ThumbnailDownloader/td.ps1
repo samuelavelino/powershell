@@ -1,11 +1,11 @@
 param (
-    [Alias('P')][string]$path = [Environment]::GetFolderPath("Desktop"),
-    [Alias('D')][string]$download = [IO.Path]::Combine($path, 'links.txt'),
-    [Alias('S')][string]$size = 'all',
-    [Alias('F')][string]$subFolder = 'id',
-    [Alias('O')][bool]$overwrite = $false,
-    [Alias('M')][bool]$showOutput = $true,
-    [Alias('A')][bool]$archive = $true,
+    [Alias('P')]$path = [Environment]::GetFolderPath("Desktop"),
+    [Alias('D')]$download = [IO.Path]::Combine($path, 'links.txt'),
+    [Alias('S')]$size = 'all',
+    [Alias('F')]$subFolder = 'id',
+    [Alias('O')]$overwrite = $false,
+    [Alias('M')]$showOutput = $true,
+    [Alias('A')]$archive = $true,
     [Alias('E')]$exec
 )
 
@@ -27,7 +27,16 @@ $file = [IO.Path]::Combine($path, "archive.txt")
 # Function
 
 Function Create-Directory( $path ) {
-  
+    <#
+    .SYNOPSIS
+        Creates a directory.
+
+    .DESCRIPTION
+        The function Create-Directory creates any intermediate directories in the path, if needed.
+
+    .PARAMETER Path
+        Specifies the path of where you want to create the new directory.
+    #>
     if (Test-Path $path -PathType Container) {
         if ($showOutput) { Write-Host "[TD] (Create-Directory) Directory already exists: $path" -f Red }
     }
@@ -49,7 +58,7 @@ Function Get-URL( $download ) {
     }
     elseif (Test-Path $download -PathType Leaf) {
         if ($showOutput) { Write-Host "[TD] (Get-URL) FILE: $download" -f Green }
-        $url = @(Get-Content $download)
+        $url = Get-Content $download
     }
     else {
         if ($showOutput) { Write-Host "[TD] (Get-URL) ERROR: $download" -f Red }
