@@ -49,7 +49,7 @@ Function Get-URL( $download ) {
     }
     elseif (Test-Path $download -PathType Leaf) {
         if ($showOutput) { Write-Host "[TD] (Get-URL) FILE: $download" -f Green }
-        $url = Get-Content $download
+        $url = @(Get-Content $download)
     }
     else {
         if ($showOutput) { Write-Host "[TD] (Get-URL) ERROR: $download" -f Red }
