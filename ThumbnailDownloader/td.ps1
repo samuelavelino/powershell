@@ -2,10 +2,11 @@ param (
     [Alias('P')]$path = [Environment]::GetFolderPath("Desktop"),
     [Alias('D')]$download = [IO.Path]::Combine($path, 'links.txt'),
     [Alias('S')]$size = 'all',
-    [Alias('F')]$folderName = "Thumb $(Get-Date -Format "yyyy-MM-dd_HH-mm-ss")",
+    [Alias('F')]$folderName = "Thumb ($(Get-Date -Format 'yyyy-MM-dd_HH-mm-ss'))",
     [Alias('Sf')]$subFolder = 'id',
     [Alias('O')]$overwrite = $false,
     [Alias('M')]$message = $true,
+    [Alias('L')]$log = $false,
     [Alias('A')]$archive = $true,
     [Alias('E')]$exec
 )
@@ -20,11 +21,18 @@ param (
 
 $quality = @('maxresdefault', 'sddefault', 'hqdefault', 'mqdefault', 'default', '1', '2', '3')
 $path = [IO.Path]::Combine($path, $folderName)
-$file = [IO.Path]::Combine($path, "archive.txt")
+$logFile = [IO.Path]::Combine($path, "log ($(Get-Date -Format 'yyyy-MM-dd_HH-mm-ss')).txt")
+$archiveFile = [IO.Path]::Combine($path, "archive ($(Get-Date -Format 'yyyy-MM-dd_HH-mm-ss')).txt")
 
 #=================================================================================
 # Functions
 
+Function Message( $string, $foregroundColor ) {
+
+    if ($message) { Write-Host $string -f $foregroundColor }
+    if ($log) { $string | Add-Content -Path $logFile }
+}
+#---------------------------------------------------------------------------------
 Function Create-Directory( $path ) {
     <#
     .SYNOPSIS
@@ -37,10 +45,10 @@ Function Create-Directory( $path ) {
         Specifies the path of where you want to create the new directory.
     #>
     if (Test-Path $path -PathType Container) {
-        if ($message) { Write-Host "[TD] (Create-Directory) Directory already exists: $path" -f Red }
+        Message "[TD] (Create-Directory) Directory already exists: $path" -f Red
     }
     else {
-        if ($message) { Write-Host "[TD] (Create-Directory) Directory was created: $path" -f Green }
+        Message "[TD] (Create-Directory) Directory was created: $path" -f Green
         $null = mkdir -Path $path
     }
 }
@@ -48,19 +56,19 @@ Function Create-Directory( $path ) {
 Function Get-URL( $download ) {
 
     if ( $download.Length -eq 11 ) {
-        if ($message) { Write-Host "[TD] (Get-URL) ID: $download" -f Green }
+        Message "[TD] (Get-URL) ID: $download" -f Green
         $url = "https://www.youtube.com/watch?v=$download"
     }
     elseif ( $download.Contains('https://www.youtube.com/watch?v=') -or $download.Contains('https://youtu.be/') ) {
-        if ($message) { Write-Host "[TD] (Get-URL) URL: $download" -f Green }
+        Message "[TD] (Get-URL) URL: $download" -f Green
         $url = $download
     }
     elseif (Test-Path $download -PathType Leaf) {
-        if ($message) { Write-Host "[TD] (Get-URL) FILE: $download" -f Green }
+        Message "[TD] (Get-URL) FILE: $download" -f Green
         $url = Get-Content $download
     }
     else {
-        if ($message) { Write-Host "[TD] (Get-URL) ERROR: $download" -f Red }
+        Message "[TD] (Get-URL) ERROR: $download" -f Red
         $url = $download
     }
 
@@ -82,13 +90,13 @@ Function Get-ID( $url ) {
             return $id
         }
         else {
-            if ($message) { Write-Host "[TD] (Get-ID) This is not a valid Youtube ID: $id" -f Red }
+            Message "[TD] (Get-ID) This is not a valid Youtube ID: $id" -f Red
             return 'exit'
         }
     }
     else {
   
-        if ($message) { Write-Host "[TD] (Get-ID) This is not a valid Youtube URL: $url" -f Red }
+        Message "[TD] (Get-ID) This is not a valid Youtube URL: $url" -f Red
         return 'exit'
     }
 }
@@ -99,14 +107,14 @@ Function Download-File( $address, $fileName ) {
     {
         # Download file
         (New-Object System.Net.WebClient).DownloadFile($address, $fileName)
-        if ($message) { Write-Host "[TD] (Download-File) URL: $address" -f Yellow }
-        if ($message) { Write-Host "[TD] (Download-File) PATH: $fileName" -f Green }
+        Message "[TD] (Download-File) URL: $address" -f Yellow
+        Message "[TD] (Download-File) PATH: $fileName" -f Green
         return $true
     }
     catch
     {
-        if ($message) { Write-Host "[TD] (Download-File) URL: $address" -f Yellow }
-        if ($message) { Write-Host "[TD] (Download-File) $_" -f Red }
+        Message "[TD] (Download-File) URL: $address" -f Yellow
+        Message "[TD] (Download-File) $_" -f Red
         return $false
     }
 }
@@ -115,11 +123,12 @@ Function Download-Thumbnail( $url ) {
 
     $folder = $path
     $id = Get-ID $url
+    $success = $false
 
     if ($id -eq 'exit') {
 
-        if ($message) { Write-Host "[TD] (Download-Thumbnail) Operation aborted!" -f Yellow }
-        if ($archive) { "[E] $url"| Add-Content -Path $file }
+        Message "[TD] (Download-Thumbnail) Operation aborted!" -f Yellow
+        if ($archive) { "[E] $url" | Add-Content -Path $archiveFile }
     }
     else {
 
@@ -142,18 +151,18 @@ Function Download-Thumbnail( $url ) {
 
             if (Test-Path $fileName -PathType Leaf) {
 
-                if ($message) { Write-Host "[TD] (Download-Thumbnail) The file already exists: $fileName" -f Yellow }
+                Message "[TD] (Download-Thumbnail) The file already exists: $fileName" -f Yellow
                 
                 if ($overwrite) {
 
                     $success = Download-File $address $fileName
 
                     if ($success -and $exec -ne $null) {
-                        if ($message) { Write-Host "[TD] (Download-Thumbnail) Command executed: $exec" -f Yellow }
+                        Message "[TD] (Download-Thumbnail) Command executed: $exec" -f Yellow
                         Invoke-Expression "$exec" -ErrorAction Stop
                     }
 
-                    if ($message) { Write-Host "[TD] (Download-Thumbnail) The file was overwritten: $fileName" -f Green }
+                    Message "[TD] (Download-Thumbnail) The file was overwritten: $fileName" -f Green
                 }
 
                 if ($size -eq 'best') {break}
@@ -163,20 +172,20 @@ Function Download-Thumbnail( $url ) {
                 $success = Download-File $address $fileName
 
                 if ($success -and $exec -ne $null) {
-                    if ($message) { Write-Host "[TD] (Download-Thumbnail) Command executed: $exec" -f Yellow }
+                    Message "[TD] (Download-Thumbnail) Command executed: $exec" -f Yellow
                     Invoke-Expression "$exec" -ErrorAction Stop
                 }
 
-                if ($archive -and $success) { "[S] $url"| Add-Content -Path $file }
-                if ($archive -and -not $success) { "[E] $url"| Add-Content -Path $file }
-                
                 if ($success -and $size -eq 'best') {break}
             }
         }
 
+        if ($archive -and $success) { "[S] $url" | Add-Content -Path $archiveFile }
+        if ($archive -and -not $success) { "[E] $url" | Add-Content -Path $archiveFile }
+        
         if ( (Get-ChildItem -Path $folder) -eq $null) {
             Remove-Item –Path $folder –Recurse -Force
-            if ($message) { Write-Host "[TD] (Download-Thumbnail) Folder Deleted: $folder" -f Yellow }
+            Message "[TD] (Download-Thumbnail) Folder Deleted: $folder" -f Yellow
         }
     }
 }
@@ -194,5 +203,5 @@ $download | % {
 
 if ( (Get-ChildItem -Path $path) -eq $null) {
     Remove-Item –Path $path –Recurse -Force
-    if ($message) { Write-Host "[TD] (Main Block) Folder Deleted: $path" -f Yellow }
+    Message "[TD] (Main Block) Folder Deleted: $path" -f Yellow
 }
