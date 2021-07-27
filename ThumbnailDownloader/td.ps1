@@ -167,12 +167,12 @@ Function Download-Thumbnail( $url ) {
                     Invoke-Expression "$exec" -ErrorAction Stop
                 }
 
+                if ($archive -and $success) { "[S] $url"| Add-Content -Path $file }
+                if ($archive -and -not $success) { "[E] $url"| Add-Content -Path $file }
+                
                 if ($success -and $size -eq 'best') {break}
             }
         }
-
-        if ($archive -and $success) { "[S] $url"| Add-Content -Path $file }
-        if ($archive -and -not $success) { "[E] $url"| Add-Content -Path $file }
 
         if ( (Get-ChildItem -Path $folder) -eq $null) {
             Remove-Item –Path $folder –Recurse -Force
