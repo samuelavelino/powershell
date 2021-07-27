@@ -1,23 +1,37 @@
-$run=$args[0]
+param (
+    [Alias('T')]$tool,
+    [Alias('A')]$arg
+)
 
-try
-{
-    switch ( $run )
+#=================================================================================
+# Function
+
+Function Downloader( $url, $arg ) {
+
+    try
     {
-        ({$run -eq 'td' -or $run -eq 'thumb'})
-        {
-            $url = 'https://raw.githubusercontent.com/samuelavelino/powershell/main/ThumbnailDownloader/td.ps1'
-            iex (New-Object System.Net.WebClient).DownloadString($url)
-            Break
-        }
-        default
-        {
-            Write-Host "'$run' command not found." -ForegroundColor Red
-        }
+        [Net.ServicePointManager]::SecurityProtocol = 'tls12, tls11, tls'
+        iex ". {$(irm $url)} $arg"
+    }
+    catch
+    {
+        Write-Host "url: $url" -ForegroundColor Yellow
+        Write-Host "An error occurred: $_" -ForegroundColor Red
     }
 }
-catch
+
+#=================================================================================
+# Main Block
+
+switch ( $tool )
 {
-    Write-Host "url: $url" -ForegroundColor Yellow
-    Write-Host "An error occurred: $_" -ForegroundColor Red
+    ({$tool -eq 'td' -or $tool -eq 'thumb'})
+    {
+        Downloader -arg $arg -url 'https://raw.githubusercontent.com/samuelavelino/powershell/main/ThumbnailDownloader/td.ps1'
+        Break
+    }
+    default
+    {
+        Write-Host "'$tool' command not found." -ForegroundColor Red
+    }
 }
