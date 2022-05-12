@@ -1,13 +1,13 @@
 # Script Test
 An easy way to test a PowerShell script block
 
-## Usage
+## How to use
 You don't need to install anything, just import the "test.ps1" file into your script and put your code inside the "Test" function.
 See the examples below.
 
 ## Exemple
 
-### PowerShell: //importe de uma url
+### Import from URL
 ```powershell
 # exemple.ps1
 [Net.ServicePointManager]::SecurityProtocol='Tls12'; iex (irm https://bit.ly/ps1test)
@@ -19,7 +19,7 @@ Test {
 }
 ```
 
-### Local: //importe de um diretorio
+### Import from file
 ```powershell
 # exemple.ps1
 . $PSScriptRoot\test.ps1
