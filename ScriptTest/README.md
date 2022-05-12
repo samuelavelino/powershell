@@ -1,5 +1,6 @@
 # Script Test
 An easy way to test a PowerShell script block
+![test run output](./image.png "test run output")
 
 ## How to use
 You don't need to install anything, just import the "test.ps1" file into your script and put your code inside the "Test" function.
