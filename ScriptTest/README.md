@@ -22,7 +22,7 @@ Test {
 }
 ```
 
-### Import from file
+### Import from local file
 ```powershell
 # exemple.ps1
 . $PSScriptRoot\test.ps1
