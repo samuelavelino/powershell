@@ -23,7 +23,7 @@ powershell [Net.ServicePointManager]::SecurityProtocol='Tls12'; iex (irm https:/
 
 
 ## To download all YouTube thumbnail
-You must pass to the filePath parameter (-f alias) the '[$id] $title\$quality.jpg' value and to the size parameter (-s alias) the 'all' value.
+You must pass to the filePath parameter (-f alias) the '[$id] $title\\$quality.jpg' value and to the size parameter (-s alias) the 'all' value.
 
 ### Command Prompt:
 ```powershell
@@ -44,8 +44,8 @@ powershell [Net.ServicePointManager]::SecurityProtocol='Tls12'; iex """. {$(irm 
 # pass an url
 powershell [Net.ServicePointManager]::SecurityProtocol='Tls12'; iex """. {$(irm http://bit.ly/pwsh-td)} -d https://www.youtube.com/watch?v=jNQXAC9IVRw"""
 ```
-
-
+  
+  
 ## Troubleshooting
 When you are executing a PowerShell script for the first time you may encounter the following error:
 filename.ps1 cannot be loaded because running scripts is disabled on this system.
