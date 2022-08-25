@@ -1,6 +1,7 @@
 # ThumbnailDownloader
 An easy way to download all the youtube thumbnails you want.
-
+<br>
+<br>
 ## How to use
 You can run the "td.ps1" script with PowerShell or copy and paste in the Command Prompt.
 
