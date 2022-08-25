@@ -1,7 +1,7 @@
 # ThumbnailDownloader
 An easy way to download all the youtube thumbnails you want.
 <br>
-<br>
+
 ## How to use
 You can run the "td.ps1" script with PowerShell or copy and paste in the Command Prompt.
 
@@ -32,7 +32,6 @@ You must pass to the filePath parameter (-f alias) the '[$id] $title\\$quality.j
 ```powershell
 powershell [Net.ServicePointManager]::SecurityProtocol='Tls12'; iex """. {$(irm http://bit.ly/pwsh-td)} -f '[`$id] `$title\`$quality.jpg' -s all"""
 ```
-<br>
 <br>
 
 ### To download only a YouTube thumbnail
