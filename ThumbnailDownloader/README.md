@@ -30,7 +30,13 @@ You must pass to the filePath parameter (-f alias) the '[$id] $title\\$quality.j
 
 #### Command Prompt:
 ```powershell
-powershell [Net.ServicePointManager]::SecurityProtocol='Tls12'; iex """. {$(irm http://bit.ly/pwsh-td)} -f '[`$id] `$title\`$quality.jpg' -s all"""
+# this command saves the json
+powershell [Net.ServicePointManager]::SecurityProtocol='Tls12'; iex """. {$(irm http://bit.ly/pwsh-td)} -f '[`$id] `$title\`$quality.jpg' -s all -j '[`$id] `$title\data'"""
+```
+#### Command Prompt:
+```powershell
+# this command don't save the json
+powershell [Net.ServicePointManager]::SecurityProtocol='Tls12'; iex """. {$(irm http://bit.ly/pwsh-td)} -f '[`$id] `$title\`$quality.jpg' -s all -j `$false"""
 ```
 <br>
 
@@ -39,12 +45,12 @@ You must pass a video id or url to the download parameter (you can use the alias
 
 #### Command Prompt:
 ```powershell
-# pass an id
+# passing an id
 powershell [Net.ServicePointManager]::SecurityProtocol='Tls12'; iex """. {$(irm http://bit.ly/pwsh-td)} -d jNQXAC9IVRw"""
 ```
 #### Command Prompt:
 ```powershell
-# pass an url
+# passing an url
 powershell [Net.ServicePointManager]::SecurityProtocol='Tls12'; iex """. {$(irm http://bit.ly/pwsh-td)} -d https://www.youtube.com/watch?v=jNQXAC9IVRw"""
 ```
 <br>
