@@ -56,14 +56,14 @@
 
 param (
     [Alias('P')]$path = [IO.Path]::Combine( [Environment]::GetFolderPath('Desktop'), "Thumb ($(Get-Date -f 'yyyy-MM-dd_HH-mm-ss'))"),
-    [Alias('F')]$filePath = '$numb - [$id] $title ($quality).jpg',
+    [Alias('F')][string]$filePath = '$numb - [$id] $title ($quality).jpg',
     [Alias('D')]$download = [IO.Path]::Combine( [Environment]::GetFolderPath("Desktop"), 'urls.txt'),
-    [Alias('S')]$size = 'best',
-    [Alias('M')]$message = $true,
-    [Alias('L')]$log = $true,
-    [Alias('A')]$archive = $true,
-    [Alias('J')]$json = '$numb - [$id] $title',
-    [Alias('E')]$exec
+    [Alias('S')][ValidateSet('best', 'all')][string]$size = 'best',
+    [Alias('M')][bool]$message = $true,
+    [Alias('L')][bool]$log = $true,
+    [Alias('A')][bool]$archive = $true,
+    [Alias('J')][string]$json = '$numb - [$id] $title',
+    [Alias('E')][string]$exec
 )
 
 #=================================================================================
@@ -302,7 +302,7 @@ Function Save-Json ( $videoJson ) {
     $fileName = $ExecutionContext.InvokeCommand.ExpandString( $json )
     $jsonFile = [IO.Path]::Combine( $path, "$fileName.json" )
 
-    if ( $json -ne $null -or $json -ne '' ) {
+    if ( $json -ne $false ) {
         try
         {
             $videoJson | ConvertTo-Json | Set-Content -LiteralPath $jsonFile -Encoding UTF8
@@ -416,7 +416,7 @@ Function Download-Thumbnail( $url ) {
 
                     $success = Download-File $address $fileName
 
-                    if ( $success -and $exec -ne $null ) {
+                    if ( $success -and $exec -ne '' ) {
                         Invoke-Expression $exec -ErrorAction Stop
                         Message -Origin $MyInvocation -Type 'alert' -Text 'Run command' -Value $exec
                     }
