@@ -67,7 +67,7 @@
     https://github.com/samuelavelino/powershell/tree/main/ThumbnailDownloader
 
 .NOTES
-    Version: 2.12 (2022-08-24)
+    Version: 2.12 (2022-08-27)
     Author: Samuel Avelino
     Contact: avelino.contactme+github@gmail.com
     Website: https://samuelavelino.github.io
