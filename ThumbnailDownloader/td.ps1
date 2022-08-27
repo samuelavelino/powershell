@@ -6,16 +6,18 @@
     This script allows you to download all the thumbnails you want.
 
 .PARAMETER Path
-    The path where the thumbnails will be saved. The default value is '\Desktop\Thumb (yyyy-MM-dd_HH-mm-ss)'.
+    Specifies the path where the thumbnails will be saved. (Default = '\Desktop\Thumb (yyyy-MM-dd_HH-mm-ss)')
 
 .PARAMETER FilePath
-    The path and name of the thumbnails (you can create subfolders). The default value is '$numb - [$id] $title ($quality).jpg'.
+    Specifies the path and name of the thumbnails. (Default = '$numb - [$id] $title ($quality).jpg')
 
 .PARAMETER Download
-    Accepts a video id, a URL or the path to a file with multiple ids/URLs. The default value is '\Desktop\urls.txt'.
+    Accepts a video id, a URL or the path to a file with multiple ids/URLs. (Default = '\Desktop\urls.txt')
 
 .PARAMETER Size
-    Specifies whether to download all qualities or just the best. The default value is best. The acceptable values for this parameter are:
+    Specifies whether to download all qualities or just the best. (Default = best)
+    
+    The acceptable values for this parameter are:
 
     - all
         Download all available images.
@@ -23,19 +25,43 @@
         Download only the best quality.
 
 .PARAMETER Message
-    If the value is true, it displays system messages. The default value is true.
+    If the value is true, it displays system messages. (Default = True)
     
 .PARAMETER Log
-    If the value is true, saves system messages to a file. The default value is true.
+    If the value is true, saves system messages to the log file. (Default = True)
     
 .PARAMETER Archive
-    If the value is true, save the URLs to a file. The default value is true.
+    If the value is true, save the URLs to the archive file. (Default = True)
 
 .PARAMETER Json
-    Specifies the path and name of the json file where the video data will be saved. The default value is '$numb - [$id] $title'.
+    Specifies the path and name of the json file where the video data will be saved. (Default = '$numb - [$id] $title')
     
 .PARAMETER Exec
     A command that will be executed after downloading each thumbnail.
+
+.EXAMPLE
+    PS> .\td.ps1
+    By default, it will download only the best quality of each URL from the urls.txt file.
+
+.EXAMPLE
+    PS> .\td.ps1 -download jNQXAC9IVRw
+    It will download only a YouTube thumbnail with a video ID.
+
+.EXAMPLE
+    PS> .\td.ps1 -download https://www.youtube.com/watch?v=jNQXAC9IVRw
+    It will download only a YouTube thumbnail with a video URL.
+
+.EXAMPLE
+    PS> .\td.ps1 -filePath '$numb - [$id] $title\$quality.jpg' -size all -json '$numb - [$id] $title\data'
+    Create subfolders for each thumbnail, download all thumbnail images and save the json file.
+
+.EXAMPLE
+    PS> .\td.ps1 -filePath '$numb - [$id] $title\$quality.jpg' -size all -json $false
+    Create subfolders for each thumbnail, download all thumbnail images and don't save the json file.
+
+.EXAMPLE
+    PS> .\td.ps1 -exec 'rni –l $fileName -n "$title.jpg"'
+    It will run a command (changes the thumbnail name to the video title) when downloading each thumbnail.
 
 .LINK
     https://github.com/samuelavelino/powershell/tree/main/ThumbnailDownloader
