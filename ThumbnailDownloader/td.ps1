@@ -25,13 +25,13 @@
         Download only the best quality.
 
 .PARAMETER Message
-    If the value is true, it displays system messages. (Default = True)
+    If the value is true, it will display system messages. (Default = True)
     
 .PARAMETER Log
-    If the value is true, saves system messages to the log file. (Default = True)
+    If the value is true, record the system messages to the log file. (Default = True)
     
 .PARAMETER Archive
-    If the value is true, save the URLs to the archive file. (Default = True)
+    If the value is true, record the URLs in the archive file. (Default = True)
 
 .PARAMETER Json
     Specifies the path and name of the json file where the video data will be saved. (Default = '$numb - [$id] $title')
