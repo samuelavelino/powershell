@@ -28,7 +28,7 @@
     If the value is true, it will display system messages. (Default = True)
     
 .PARAMETER Log
-    If the value is true, record the system messages to the log file. (Default = True)
+    If the value is true, record the system messages in the log file. (Default = True)
     
 .PARAMETER Archive
     If the value is true, record the URLs in the archive file. (Default = True)
@@ -61,7 +61,7 @@
 
 .EXAMPLE
     PS> .\td.ps1 -exec 'rni –l $fileName -n "$title.jpg"'
-    It will run a command (changes the thumbnail name to the video title) when downloading each thumbnail.
+    It will execute a command when downloading each thumbnail (this command changes the thumbnail name to the video title).
 
 .LINK
     https://github.com/samuelavelino/powershell/tree/main/ThumbnailDownloader
