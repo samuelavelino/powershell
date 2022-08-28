@@ -54,6 +54,16 @@ powershell [Net.ServicePointManager]::SecurityProtocol='Tls12'; iex """. {$(irm 
 powershell [Net.ServicePointManager]::SecurityProtocol='Tls12'; iex """. {$(irm http://bit.ly/pwsh-td)} -d https://www.youtube.com/watch?v=jNQXAC9IVRw"""
 ```
 <br>
+
+### To execute a command after downloading each thumbnail
+You must pass to the exec parameter (-e alias) the value you want to execute.
+
+#### Command Prompt:
+```powershell
+# change thumbnail name to the video title
+powershell [Net.ServicePointManager]::SecurityProtocol='Tls12'; $a='rni –l $fileName -n """$title.jpg"""'; iex """. {$(irm http://bit.ly/pwsh-td)} -e `$a"""
+```
+<br>
 <br>
 
 ---
