@@ -25,7 +25,7 @@ powershell [Net.ServicePointManager]::SecurityProtocol='Tls12'; iex (irm https:/
 ```
 <br>
 
-### To download all YouTube thumbnail
+### To create subfolders for each thumbnail and download all thumbnail images
 You must pass to the filePath parameter (-f alias) the '[$id] $title\\$quality.jpg' value and to the size parameter (-s alias) the 'all' value.
 
 #### Command Prompt:
