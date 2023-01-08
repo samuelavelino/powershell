@@ -9,9 +9,9 @@
     https://github.com/samuelavelino/powershell/tree/main/ScriptTest
 
 .NOTES
-    Version: 1.0 (2022-05-12)
+    Version: 1.1 (2023-01-01)
     Author:  Samuel Avelino
-    Contact: avelino.contactme+github@gmail.com
+    Contact: avelino.contactme+github(a)gmail.com
     Website: https://samuelavelino.github.io
 #>
 #=================================================================================
@@ -57,14 +57,16 @@ Function Test ( [ScriptBlock] $scriptBlock ) {
     }
     catch {
 
-        $msg = $_.Exception.Message
+        $script = $_.InvocationInfo.ScriptName
         $line = $_.InvocationInfo.ScriptLineNumber
         $char = $_.InvocationInfo.OffsetInLine
-        $script = $_.InvocationInfo.ScriptName
-
+        $origin = $_.InvocationInfo.Line
+        $msg = $_.Exception.Message
+        
         Write-Host -f Red "Error location:"
         Write-Host -f Red "- Script: $script"
         Write-Host -f Red "- Line: $line Char: $char"
+        Write-Host -f Red "- Origin: $($origin.Trim())"
         Write-Host -f Red "- Message: $msg"
 
     }
