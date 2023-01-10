@@ -20,6 +20,7 @@ Test {
     $path = [IO.Path]::Combine( $PSScriptRoot, 'output' )
     . $PSScriptRoot\script.ps1 -path $path -message $true -log $true
 }
+```
 
 ## Troubleshooting
 When you are executing a PowerShell script for the first time you may encounter the following error:
@@ -35,3 +36,4 @@ powershell Set-ExecutionPolicy RemoteSigned
 ### PowerShell:
 ```powershell
 Set-ExecutionPolicy RemoteSigned -force
+```
