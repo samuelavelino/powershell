@@ -23,10 +23,7 @@ Test {
 ```
 <br>
 <br>
-
----
-
-## Troubleshooting
+# Troubleshooting
 When you are executing a PowerShell script for the first time you may encounter the following error:
 filename.ps1 cannot be loaded because running scripts is disabled on this system.
 
